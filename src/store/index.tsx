@@ -1,9 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { lineReducer } from './slice/lineSlice';
+import { elementReducer } from './slice/elementSlice';
+import { settingsReducer } from './slice/settingsSlice';
+import { applicationStateReducer } from './slice/stateSlice';
 
 export const store = configureStore({
   reducer: {
-    line: lineReducer,
+    settings: settingsReducer,
+    elements: elementReducer,
+    applicationstate: applicationStateReducer,
   },
 });
 
