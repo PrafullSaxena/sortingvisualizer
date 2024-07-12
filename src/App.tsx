@@ -1,13 +1,13 @@
-import { useState } from 'react';
 import './App.css';
 import { Provider } from 'react-redux';
 import { store } from './store';
+import Home from './screens/home';
 
 function App() {
   return (
     <>
       <Provider store={store}>
-        <div>Sample Project</div>
+        <Home />
       </Provider>
     </>
   );
