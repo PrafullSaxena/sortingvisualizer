@@ -1,5 +1,10 @@
 .home {
+  position: relative;
   max-width: 150rem;
   margin-left: auto;
   margin-right: auto;
+}
+
+.selected-button {
+  background-color: #ff0000;
 }

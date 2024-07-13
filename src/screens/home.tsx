@@ -1,4 +1,5 @@
 import LineContainer from './LineContainer';
+import AboutScreen from './about';
 import Header from './header';
 
 const Home = () => {
@@ -7,6 +8,7 @@ const Home = () => {
       <div className='home'>
         <Header />
         <LineContainer />
+        <AboutScreen />
       </div>
     </>
   );

@@ -22,3 +22,11 @@ export const ALGORITHMS = {
     SHELL_SORT: "Shell Sort",
     // RADIX_SORT: "Radix Sort",
 }
+
+export const COLOR = {
+    PRIMARY: "#764abc",
+    // SECONDARY: "#F7C41C",
+    SECONDARY: "#FFDE56",
+    BLACK: "#0f0f0f",
+    WHITE: "#F7F7F7",
+}

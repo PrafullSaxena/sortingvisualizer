@@ -5,11 +5,12 @@ import Slider from './Slider';
 import LineBreak from './lineBreak';
 import { APPLICATION_STATE } from '../utils/Types';
 import { resetState } from '../store/slice/stateSlice';
+import { COLOR } from '../data/AppContants';
 
 const Container = styled.div`
   /* margin-top: 150px; */
   position: absolute;
-  background-color: #fff;
+  background-color: ${COLOR.BLACK};
   top: 3rem;
   display: flex;
   flex-direction: column;

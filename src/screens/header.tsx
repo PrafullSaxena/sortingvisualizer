@@ -14,6 +14,7 @@ const Container = styled.div`
   justify-content: space-between;
   align-items: center;
   padding: 10px 30px;
+  background-color: #764abc;
 `;
 
 const Logo = styled.div`
@@ -22,14 +23,16 @@ const Logo = styled.div`
 `;
 
 const AlgoInfo = styled.div`
-  padding: 10px;
+  padding: 5px 10px;
   cursor: pointer;
   display: flex;
   justify-items: center;
   align-items: center;
-  padding: 10px;
-  width: 150px;
+  width: 180px;
   border: 1px solid #ccc;
+  border-radius: 10px;
+  font-size: 18px;
+  font-weight: 400;
 `;
 
 const Header: FC = () => {
