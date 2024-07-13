@@ -1,10 +1,9 @@
 import { useEffect } from 'react';
 import styled from 'styled-components';
 import { useAppSelector, useListentArraySizeChange } from '../utils/hooks';
-import { CONSTANT } from '../data/AppContants';
+import { COLOR, CONSTANT } from '../data/AppContants';
 
 const Container = styled.div`
-  border: 1px solid #000;
   margin-top: 0%;
   padding-top: 0%;
   padding-bottom: 10px;
@@ -41,12 +40,14 @@ const LineContainer = () => {
               width: '1%',
               backgroundColor: `${
                 index === primaryIndex
-                  ? CONSTANT.LINE_PRIMARY
+                  ? COLOR.PRIMARY
                   : index === secondaryIndex
-                  ? CONSTANT.LINE_SECONDARY
-                  : element.color
+                  ? COLOR.WHITE
+                  : COLOR.SECONDARY
               }`,
-              border: '1px solid #ff7171',
+              border: '1px solid #edce52',
+              borderRadius: '0 0 25px 25px',
+
               // border: '1px solid #4990f3',
               //   boxShadow: '0 -4px 6px -2px rgba(0, 0, 0, 0.3)',
             }}

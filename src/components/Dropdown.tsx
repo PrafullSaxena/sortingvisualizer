@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import IconText from './IconText';
 import { useAppSelector } from '../utils/hooks';
 import { APPLICATION_STATE } from '../utils/Types';
+import { COLOR } from '../data/AppContants';
 
 type DropdownProp = {
   items: string[];
@@ -16,10 +17,14 @@ const Container = styled.div`
 `;
 
 const Button = styled.button`
-  padding: 10px;
-  width: 150px;
+  padding: 5px 10px;
+  width: 180px;
+  font-size: 18px;
+  font-weight: 500;
+  border-radius: 10px;
   border: 1px solid #ccc;
-  background-color: #fff;
+  color: ${COLOR.WHITE};
+  background-color: transparent;
   cursor: pointer;
 `;
 
@@ -28,7 +33,7 @@ const UL = styled.ul`
   padding: 0;
   margin: 0;
   position: absolute;
-  background-color: #fff;
+  background-color: ${COLOR.BLACK};
   border: 1px solid #ccc;
   z-index: 1;
 `;
@@ -38,7 +43,7 @@ const LI = styled.li`
   cursor: pointer;
   width: 150px;
   &:hover {
-    background-color: #f1f1f1;
+    background-color: #554f4f;
   }
 `;
 

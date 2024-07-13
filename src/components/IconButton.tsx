@@ -45,6 +45,7 @@ const style: { [key: string]: React.CSSProperties } = {
   icon: {
     marginRight: '8px',
     fontSize: '24px',
+    color: '#fff',
   },
 };
 
