@@ -1,7 +1,7 @@
 import { AppDispatch, store } from "../../../store";
 import { updateElements } from "../../../store/slice/elementSlice";
 import { changeApplicationState, changePrimaryIndex, changeSecondaryIndex } from "../../../store/slice/stateSlice";
-import { APPLICATION_STATE, Algo, LineType } from "../../Types";
+import { APPLICATION_STATE, Algo, LineType, AlgoStepType, Complexity } from "../../Types";
 
 export class InsertionSort implements Algo {
     private dispatch: AppDispatch;
@@ -46,12 +46,20 @@ export class InsertionSort implements Algo {
         this.dispatch(changeApplicationState(APPLICATION_STATE.FINISHED));
     }
 
-    getTimeComplexity(): string {
-        return "O(n^2)";
+    getTimeComplexity(): Complexity {
+        return {
+            best: "O(n)",
+            average: "O(n^2)",
+            worst: "O(n^2)",
+        };
     }
 
-    getSpaceComplexity(): string {
-        return "O(1)";
+    getSpaceComplexity(): Complexity {
+        return {
+            best: "O(1)",
+            average: "O(1)",
+            worst: "O(1)",
+        }
     }
 
     getName(): string {
@@ -62,87 +70,174 @@ export class InsertionSort implements Algo {
         return "Insertion Sort is an in-place comparison-based sorting algorithm. It builds the final sorted array one item at a time, with each iteration moving an element to its appropriate position.";
     }
 
+    getAlgoSteps(): AlgoStepType[] {
+        return [
+            {
+                "title": "Initial Array",
+                "description": "The input array to be sorted.",
+                "array": [10, 7, 8, 9, 1, 5]
+            },
+            {
+                "title": "Insertion Sort",
+                "description": "Sort the array using insertion sort.",
+                "steps": [
+                    {
+                        "title": "Iteration 1",
+                        "description": "Insert 7 into its correct position.",
+                        "array": [7, 10, 8, 9, 1, 5]
+                    },
+                    {
+                        "title": "Iteration 2",
+                        "description": "Insert 8 into its correct position.",
+                        "array": [7, 8, 10, 9, 1, 5]
+                    },
+                    {
+                        "title": "Iteration 3",
+                        "description": "Insert 9 into its correct position.",
+                        "array": [7, 8, 9, 10, 1, 5]
+                    },
+                    {
+                        "title": "Iteration 4",
+                        "description": "Insert 1 into its correct position.",
+                        "array": [1, 7, 8, 9, 10, 5]
+                    },
+                    {
+                        "title": "Iteration 5",
+                        "description": "Insert 5 into its correct position.",
+                        "array": [1, 5, 7, 8, 9, 10]
+                    }
+                ]
+            },
+            {
+                "title": "Sorted Array",
+                "description": "Array after Insertion Sort.",
+                "array": [1, 5, 7, 8, 9, 10]
+            }
+        ]
+    }
+
     getJavaCode(): string {
         return `
-public class InsertionSort {
-    void sort(int arr[]) {
-        int n = arr.length;
+import java.util.Arrays;
+
+public class InsertionSortExample {
+
+    public static void main(String[] args) {
+        int[] array = {10, 7, 8, 9, 1, 5};
+        
+        System.out.println("Initial Array: " + Arrays.toString(array));
+        insertionSort(array);
+        System.out.println("Sorted Array: " + Arrays.toString(array));
+    }
+
+    public static void insertionSort(int[] array) {
+        int n = array.length;
         for (int i = 1; i < n; ++i) {
-            int key = arr[i];
+            int key = array[i];
             int j = i - 1;
-            while (j >= 0 && arr[j] > key) {
-                arr[j + 1] = arr[j];
+
+            // Move elements of array[0..i-1], that are greater than key, to one position ahead of their current position
+            while (j >= 0 && array[j] > key) {
+                array[j + 1] = array[j];
                 j = j - 1;
             }
-            arr[j + 1] = key;
+            array[j + 1] = key;
         }
     }
-}`;
+}
+        `;
     }
 
     getJavascriptCode(): string {
         return `
-function insertionSort(arr) {
-    let n = arr.length;
+function insertionSort(array) {
+    console.log("Initial Array: " + array.join(', '));
+    
+    let n = array.length;
     for (let i = 1; i < n; i++) {
-        let key = arr[i];
+        let key = array[i];
         let j = i - 1;
-        while (j >= 0 && arr[j] > key) {
-            arr[j + 1] = arr[j];
+        
+        // Move elements of array[0..i-1], that are greater than key, to one position ahead of their current position
+        while (j >= 0 && array[j] > key) {
+            array[j + 1] = array[j];
             j = j - 1;
         }
-        arr[j + 1] = key;
+        array[j + 1] = key;
     }
-    return arr;
-}`;
+    
+    console.log("Sorted Array: " + array.join(', '));
+}
+
+let array = [10, 7, 8, 9, 1, 5];
+insertionSort(array);
+`;
     }
 
     getPythonCode(): string {
         return `
-def insertion_sort(arr):
-    n = len(arr)
+def insertion_sort(array):
+    print(f"Initial Array: {array}")
+    
+    n = len(array)
     for i in range(1, n):
-        key = arr[i]
+        key = array[i]
         j = i - 1
-        while j >= 0 and key < arr[j]:
-            arr[j + 1] = arr[j]
+        
+        # Move elements of array[0..i-1], that are greater than key, to one position ahead of their current position
+        while j >= 0 and array[j] > key:
+            array[j + 1] = array[j]
             j -= 1
-        arr[j + 1] = key
-    return arr`;
+        array[j + 1] = key
+    
+    print(f"Sorted Array: {array}")
+
+array = [10, 7, 8, 9, 1, 5]
+insertion_sort(array)
+
+        `;
     }
 
     getCCode(): string {
         return `
 #include <stdio.h>
 
-void insertionSort(int arr[], int n) {
+void insertionSort(int array[], int n) {
+    printf("Initial Array: ");
+    for (int i = 0; i < n; i++) {
+        printf("%d ", array[i]);
+    }
+    printf("\n");
+    
     int i, key, j;
     for (i = 1; i < n; i++) {
-        key = arr[i];
+        key = array[i];
         j = i - 1;
-        while (j >= 0 && arr[j] > key) {
-            arr[j + 1] = arr[j];
+        
+        // Move elements of array[0..i-1], that are greater than key, to one position ahead of their current position
+        while (j >= 0 && array[j] > key) {
+            array[j + 1] = array[j];
             j = j - 1;
         }
-        arr[j + 1] = key;
+        array[j + 1] = key;
     }
-}
-
-void printArray(int arr[], int size) {
-    for (int i = 0; i < size; i++)
-        printf("%d ", arr[i]);
-    printf("\\n");
+    
+    printf("Sorted Array: ");
+    for (int i = 0; i < n; i++) {
+        printf("%d ", array[i]);
+    }
+    printf("\n");
 }
 
 int main() {
-    int arr[] = {12, 11, 13, 5, 6};
-    int n = sizeof(arr) / sizeof(arr[0]);
-    printf("Unsorted array: \\n");
-    printArray(arr, n);
-    insertionSort(arr, n);
-    printf("Sorted array: \\n");
-    printArray(arr, n);
+    int array[] = {10, 7, 8, 9, 1, 5};
+    int n = sizeof(array) / sizeof(array[0]);
+    
+    insertionSort(array, n);
+    
     return 0;
-}`;
+}
+
+        `
     }
 }

@@ -40,12 +40,12 @@ const LineContainer = () => {
               width: '1%',
               backgroundColor: `${
                 index === primaryIndex
-                  ? COLOR.PRIMARY
+                  ? COLOR.LINE_ACTIVE
                   : index === secondaryIndex
-                  ? COLOR.WHITE
-                  : COLOR.SECONDARY
+                  ? COLOR.SECONDARY
+                  : COLOR.NUTRAL
               }`,
-              border: '1px solid #edce52',
+              border: `1px solid ${COLOR.BORDER}`,
               borderRadius: '0 0 25px 25px',
 
               // border: '1px solid #4990f3',

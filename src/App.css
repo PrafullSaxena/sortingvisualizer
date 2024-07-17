@@ -3,8 +3,33 @@
   max-width: 150rem;
   margin-left: auto;
   margin-right: auto;
+  height: 95vh;
+  /* border: 2px solid yellow; */
 }
 
 .selected-button {
-  background-color: #ff0000;
+  background-color: #a399fb;
+  color: #0f0f0f;
+  font-weight: 500;
+  font-stretch: extra-expanded;
+}
+
+/* Styling for Webkit-based browsers (Chrome, Safari) */
+.scroll-container::-webkit-scrollbar {
+  height: 5px;
+}
+
+.scroll-container::-webkit-scrollbar-track {
+  /* background: #2d2d2d; */
+}
+
+.scroll-container::-webkit-scrollbar-thumb {
+  background: #241f4e;
+  border-radius: 5px;
+}
+
+/* Styling for Firefox */
+.scroll-container {
+  scrollbar-width: thin;
+  scrollbar-color: #241f4e transparent;
 }
