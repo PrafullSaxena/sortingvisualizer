@@ -31,7 +31,6 @@ const ButtonGrid = () => {
   const onPlay = () => {
     dispatch(changeApplicationState(APPLICATION_STATE.RUNNING));
     const algoService: Algo = SortingFactory.getAlgo(selectedAlgo);
-    console.log('Selected algo - ', algoService.getName());
     algoService.start();
   };
   const onPause = () => {

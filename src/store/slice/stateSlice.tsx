@@ -28,6 +28,9 @@ export const StateSlice = createSlice({
     changeSecondaryIndex: (state, action: PayloadAction<number>) => {
       state.currentSecondary = action.payload;
     },
+    setModelState: (state, actoin) => {
+      state.modelOpen = actoin.payload;
+    },
   },
 });
 
@@ -37,5 +40,6 @@ export const {
   resetState,
   changePrimaryIndex,
   changeSecondaryIndex,
+  setModelState,
 } = StateSlice.actions;
 export const applicationStateReducer = StateSlice.reducer;

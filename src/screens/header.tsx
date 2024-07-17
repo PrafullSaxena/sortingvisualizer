@@ -7,7 +7,7 @@ import ButtonGrid from '../components/ButtonGrid';
 import IconText from '../components/IconText';
 import { CiSquareMore } from 'react-icons/ci';
 import { useAppDispatch, useAppSelector, useEnumToArray } from '../utils/hooks';
-import { changeSelectedAlgo } from '../store/slice/stateSlice';
+import { changeSelectedAlgo, setModelState } from '../store/slice/stateSlice';
 
 const Container = styled.div`
   display: flex;
@@ -45,6 +45,7 @@ const Header: FC = () => {
     dispatch(changeSelectedAlgo(algo));
   };
   const handleAlgoInfo = () => {
+    dispatch(setModelState(true));
     console.log('Logging selected algo');
   };
 

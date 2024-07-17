@@ -1,14 +1,17 @@
+import { useRef } from 'react';
 import LineContainer from './LineContainer';
-import AboutScreen from './about';
 import Header from './header';
+import AboutScreen from './about';
+import { useAppSelector } from '../utils/hooks';
 
 const Home = () => {
+  const modelOpen = useAppSelector((state) => state.applicationstate.modelOpen);
   return (
     <>
       <div className='home'>
         <Header />
         <LineContainer />
-        <AboutScreen />
+        {modelOpen && <AboutScreen />}
       </div>
     </>
   );

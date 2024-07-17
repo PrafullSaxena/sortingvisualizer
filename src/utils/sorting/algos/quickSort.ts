@@ -1,7 +1,7 @@
 import { AppDispatch, store } from "../../../store";
 import { updateElements } from "../../../store/slice/elementSlice";
 import { changeApplicationState, changePrimaryIndex, changeSecondaryIndex } from "../../../store/slice/stateSlice";
-import { APPLICATION_STATE, Algo, LineType } from "../../Types";
+import { APPLICATION_STATE, Algo, LineType, AlgoStepType, Complexity } from "../../Types";
 
 
 export class QuickSort implements Algo {
@@ -18,7 +18,6 @@ export class QuickSort implements Algo {
     start(): void {
         this.sort(this.elements);
     }
-
 
     async sort(arr: LineType[]): Promise<void> {
         await this.quickSort(arr, 0, arr.length - 1);
@@ -66,12 +65,20 @@ export class QuickSort implements Algo {
         return i + 1;
     }
 
-    getTimeComplexity(): string {
-        return "O(n log n)";
+    getTimeComplexity(): Complexity {
+        return {
+            best: "O(n log n)",
+            average: "O(n log n)",
+            worst: "O(n^2)",
+        };
     }
 
-    getSpaceComplexity(): string {
-        return "O(log n)";
+    getSpaceComplexity(): Complexity {
+        return {
+            best: "O(log n)",
+            average: "O(log n)",
+            worst: "O(n)",
+        };
     }
 
     getName(): string {
@@ -82,80 +89,179 @@ export class QuickSort implements Algo {
         return "Quick Sort is a divide-and-conquer algorithm. It picks an element as a pivot and partitions the given array around the picked pivot.";
     }
 
-    getJavaCode(): string {
-        return `
-public class QuickSort {
-    int partition(int arr[], int low, int high) {
-        int pivot = arr[high];
-        int i = (low - 1);
-        for (int j = low; j < high; j++) {
-            if (arr[j] < pivot) {
-                i++;
-                int temp = arr[i];
-                arr[i] = arr[j];
-                arr[j] = temp;
+    getAlgoSteps(): AlgoStepType[] {
+        return [
+            {
+                "title": "Initial Array",
+                "description": "The input array to be sorted.",
+                "array": [10, 7, 8, 9, 1, 5]
+            },
+            {
+                "title": "Choose Pivot",
+                "description": "Select a pivot element from the array.",
+                "steps": [
+                    {
+                        "description": "Pivot Element",
+                        "array": [10, 7, 8, 9, 1, 5],
+                        "result": [5]  // Pivot is the last element
+                    }
+                ]
+            },
+            {
+                "title": "Partition",
+                "description": "Rearrange elements such that elements less than pivot are on the left and elements greater than pivot are on the right.",
+                "steps": [
+                    {
+                        "description": "Partitioning Array",
+                        "array": [10, 7, 8, 9, 1, 5],
+                        "result": [1, 5, 8, 9, 10, 7]  // Example partition step
+                    }
+                ]
+            },
+            {
+                "title": "Recursive Sort on Left Sub-Array",
+                "description": "Apply quick sort recursively on the left sub-array.",
+                "steps": [
+                    {
+                        "description": "Left Sub-Array",
+                        "array": [1],
+                        "result": [1]  // Base case, already sorted
+                    }
+                ]
+            },
+            {
+                "title": "Recursive Sort on Right Sub-Array",
+                "description": "Apply quick sort recursively on the right sub-array.",
+                "steps": [
+                    {
+                        "description": "Choose Pivot",
+                        "steps": [
+                            {
+                                "description": "Pivot Element",
+                                "array": [8, 9, 10, 7],
+                                "result": [7]  // Pivot is the last element
+                            }
+                        ]
+                    },
+                    {
+                        "description": "Partition",
+                        "steps": [
+                            {
+                                "description": "Partitioning Array",
+                                "array": [8, 9, 10, 7],
+                                "result": [7, 8, 9, 10]  // Example partition step
+                            }
+                        ]
+                    },
+                    {
+                        "description": "Recursive Sort on Left Sub-Array",
+                        "steps": [
+                            {
+                                "description": "Left Sub-Array",
+                                "array": [7],
+                                "result": [7]  // Base case, already sorted
+                            }
+                        ]
+                    },
+                    {
+                        "description": "Recursive Sort on Right Sub-Array",
+                        "steps": [
+                            {
+                                "description": "Right Sub-Array",
+                                "array": [8, 9, 10],
+                                "result": [8, 9, 10]  // Example of sorted sub-array
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "title": "Combine Sorted Sub-Arrays",
+                "description": "Combine the sorted left sub-array, pivot, and sorted right sub-array.",
+                "array": [1, 5, 7, 8, 9, 10]
             }
-        }
-        int temp = arr[i + 1];
-        arr[i + 1] = arr[high];
-        arr[high] = temp;
-        return i + 1;
+        ];
     }
 
-    void sort(int arr[], int low, int high) {
+    getJavaCode(): string {
+        return `
+import java.util.Arrays;
+
+public class QuickSort {
+    public static void main(String[] args) {
+        int[] array = {10, 7, 8, 9, 1, 5};
+        quickSort(array, 0, array.length - 1);
+        System.out.println(Arrays.toString(array));
+    }
+
+    public static void quickSort(int[] array, int low, int high) {
         if (low < high) {
-            int pi = partition(arr, low, high);
-            sort(arr, low, pi - 1);
-            sort(arr, pi + 1, high);
+            int pi = partition(array, low, high);
+
+            quickSort(array, low, pi - 1);
+            quickSort(array, pi + 1, high);
         }
     }
-}`;
+
+    public static int partition(int[] array, int low, int high) {
+        int pivot = array[high];
+        int i = (low - 1);
+        for (int j = low; j < high; j++) {
+            if (array[j] <= pivot) {
+                i++;
+                int temp = array[i];
+                array[i] = array[j];
+                array[j] = temp;
+            }
+        }
+
+        int temp = array[i + 1];
+        array[i + 1] = array[high];
+        array[high] = temp;
+
+        return i + 1;
+    }
+}        
+        `
     }
 
     getJavascriptCode(): string {
         return `
-function quickSort(arr, low = 0, high = arr.length - 1) {
-    if (low < high) {
-        const pi = partition(arr, low, high);
-        quickSort(arr, low, pi - 1);
-        quickSort(arr, pi + 1, high);
+function quickSort(array) {
+    if (array.length <= 1) {
+        return array;
+    } else {
+        const pivot = array[Math.floor(array.length / 2)];
+        const left = array.filter(x => x < pivot);
+        const middle = array.filter(x => x === pivot);
+        const right = array.filter(x => x > pivot);
+        return [...quickSort(left), ...middle, ...quickSort(right)];
     }
-    return arr;
 }
 
-function partition(arr, low, high) {
-    const pivot = arr[high];
-    let i = low - 1;
-    for (let j = low; j < high; j++) {
-        if (arr[j] < pivot) {
-            i++;
-            [arr[i], arr[j]] = [arr[j], arr[i]];
-        }
-    }
-    [arr[i + 1], arr[high]] = [arr[high], arr[i + 1]];
-    return i + 1;
+const array = [10, 7, 8, 9, 1, 5];
+const sortedArray = quickSort(array);
+console.log(sortedArray);
 }`;
     }
 
     getPythonCode(): string {
         return `
-def quick_sort(arr, low = 0, high = None):
-    if high is None:
-        high = len(arr) - 1
-    if low < high:
-        pi = partition(arr, low, high)
-        quick_sort(arr, low, pi - 1)
-        quick_sort(arr, pi + 1, high)
+def quick_sort(array):
+    if len(array) <= 1:
+        return array
+    else:
+        pivot = array[len(array) // 2]
+        left = [x for x in array if x < pivot]
+        middle = [x for x in array if x == pivot]
+        right = [x for x in array if x > pivot]
+        return quick_sort(left) + middle + quick_sort(right)
 
-def partition(arr, low, high):
-    pivot = arr[high]
-    i = low - 1
-    for j in range(low, high):
-        if arr[j] < pivot:
-            i += 1
-            arr[i], arr[j] = arr[j], arr[i]
-    arr[i + 1], arr[high] = arr[high], arr[i + 1]
-    return i + 1`;
+if __name__ == "__main__":
+    array = [10, 7, 8, 9, 1, 5]
+    sorted_array = quick_sort(array)
+    print(sorted_array)
+        `
     }
 
     getCCode(): string {
@@ -168,42 +274,40 @@ void swap(int* a, int* b) {
     *b = t;
 }
 
-int partition(int arr[], int low, int high) {
-    int pivot = arr[high];
+int partition(int array[], int low, int high) {
+    int pivot = array[high];
     int i = (low - 1);
+
     for (int j = low; j < high; j++) {
-        if (arr[j] < pivot) {
+        if (array[j] <= pivot) {
             i++;
-            swap(&arr[i], &arr[j]);
+            swap(&array[i], &array[j]);
         }
     }
-    swap(&arr[i + 1], &arr[high]);
-    return i + 1;
+    swap(&array[i + 1], &array[high]);
+    return (i + 1);
 }
 
-void quickSort(int arr[], int low, int high) {
+void quickSort(int array[], int low, int high) {
     if (low < high) {
-        int pi = partition(arr, low, high);
-        quickSort(arr, low, pi - 1);
-        quickSort(arr, pi + 1, high);
-    }
-}
+        int pi = partition(array, low, high);
 
-void printArray(int arr[], int size) {
-    for (int i = 0; i < size; i++)
-        printf("%d ", arr[i]);
-    printf("\\n");
+        quickSort(array, low, pi - 1);
+        quickSort(array, pi + 1, high);
+    }
 }
 
 int main() {
-    int arr[] = {10, 7, 8, 9, 1, 5};
-    int n = sizeof(arr) / sizeof(arr[0]);
-    printf("Unsorted array: \\n");
-    printArray(arr, n);
-    quickSort(arr, 0, n - 1);
+    int array[] = {10, 7, 8, 9, 1, 5};
+    int n = sizeof(array) / sizeof(array[0]);
+    quickSort(array, 0, n - 1);
     printf("Sorted array: \\n");
-    printArray(arr, n);
+    for (int i = 0; i < n; i++)
+        printf("%d ", array[i]);
+    printf("\\n");
     return 0;
-}`;
+}
+        
+`;
     }
 }
