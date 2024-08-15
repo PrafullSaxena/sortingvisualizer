@@ -6,7 +6,7 @@ import SettingsContainer from '../components/SettingsContainer';
 import ButtonGrid from '../components/ButtonGrid';
 import IconText from '../components/IconText';
 import { CiSquareMore } from 'react-icons/ci';
-import { useAppDispatch, useAppSelector, useEnumToArray } from '../utils/hooks';
+import { useAppDispatch, useAppSelector } from '../utils/hooks';
 import { changeSelectedAlgo, setModelState } from '../store/slice/stateSlice';
 
 const Container = styled.div`

@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import styled from 'styled-components';
 import { useAppSelector, useListentArraySizeChange } from '../utils/hooks';
-import { COLOR, CONSTANT } from '../data/AppContants';
+import { COLOR } from '../data/AppContants';
 
 const Container = styled.div`
   margin-top: 0%;
