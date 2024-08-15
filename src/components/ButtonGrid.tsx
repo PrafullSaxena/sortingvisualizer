@@ -1,4 +1,4 @@
-import { CiPause1, CiPlay1, CiShuffle } from 'react-icons/ci';
+import { CiPlay1, CiShuffle } from 'react-icons/ci';
 import styled from 'styled-components';
 import { updateElements } from '../store/slice/elementSlice';
 import { changeApplicationState, resetState } from '../store/slice/stateSlice';
@@ -33,9 +33,10 @@ const ButtonGrid = () => {
     const algoService: Algo = SortingFactory.getAlgo(selectedAlgo);
     algoService.start();
   };
+  /* TODO: will implement this function once we introduce pause functionality
   const onPause = () => {
     dispatch(changeApplicationState(APPLICATION_STATE.PAUSED));
-  };
+  };*/
   const onShuffle = () => {
     const service = new ElementService();
     const createdArray = service.createAray(length);

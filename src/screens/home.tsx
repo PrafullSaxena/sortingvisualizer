@@ -1,4 +1,3 @@
-import { useRef } from 'react';
 import LineContainer from './LineContainer';
 import Header from './header';
 import AboutScreen from './about';

@@ -7,6 +7,7 @@ type ComplexityViewerProps = {
 
 function convertToSuperScript(str: string) {
   return str.replace(/O\(n\^(\d)\)/g, (match, p1) => {
+    console.log(match, p1);
     return `O(n<sup>${p1}</sup>)`;
   });
 }

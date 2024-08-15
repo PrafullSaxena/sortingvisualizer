@@ -1,15 +1,5 @@
-// import SyntaxHighlighter from 'react-syntax-highlighter';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
-// import { atomDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
-// import { dracula } from 'react-syntax-highlighter/dist/esm/styles/prism';
-import {
-  atomDark,
-  cb,
-  gruvboxDark,
-  oneDark,
-  twilight,
-  vscDarkPlus,
-} from 'react-syntax-highlighter/dist/esm/styles/prism';
+import { cb } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
 type CodeHighlightProps = {
   codeString: string;

@@ -1,9 +1,8 @@
 import { useDispatch, useSelector } from 'react-redux'
 import type { RootState, AppDispatch } from '../store'
 import { ElementService } from './ElementService'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { updateElements } from '../store/slice/elementSlice'
-import { ALGORITHMS } from './Types'
 
 // Use throughout your app instead of plain `useDispatch` and `useSelector`
 export const useAppDispatch = useDispatch.withTypes<AppDispatch>()
