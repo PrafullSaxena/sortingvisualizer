@@ -27,7 +27,6 @@ const Button = styled.button`
 `;
 
 const IconButton = ({
-  title,
   Icon = CiLineHeight,
   isDisabled = false,
   onClick,

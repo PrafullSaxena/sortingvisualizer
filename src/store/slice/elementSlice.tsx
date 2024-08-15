@@ -1,6 +1,6 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { initialElements } from '../../data/InitialConfiguration';
-import { LineType, singleLineType } from '../../utils/Types';
+import { LineType } from '../../utils/Types';
 
 const inititalState = initialElements;
 

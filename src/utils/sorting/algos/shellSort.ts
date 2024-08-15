@@ -1,7 +1,7 @@
 
 import { AppDispatch, store } from "../../../store";
 import { updateElements } from "../../../store/slice/elementSlice";
-import { changeApplicationState, changePrimaryIndex, changeSecondaryIndex } from "../../../store/slice/stateSlice";
+import { changeApplicationState, changePrimaryIndex } from "../../../store/slice/stateSlice";
 import { APPLICATION_STATE, Algo, LineType, AlgoStepType, Complexity } from "../../Types";
 
 
