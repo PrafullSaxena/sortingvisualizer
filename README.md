@@ -2,6 +2,9 @@
 
 This project is a web-based visualization tool for understanding how different sorting algorithms work. It allows users to visually compare and understand the mechanics behind various sorting algorithms through an interactive interface.
 
+## Live 
+https://main--ps-sortingvisuals.netlify.app/
+
 ## Features
 
 - **Multiple Sorting Algorithms:** Supports a variety of sorting algorithms, allowing users to explore and understand their differences.
