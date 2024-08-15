@@ -1,7 +1,7 @@
 import { AppDispatch, store } from "../../../store";
 import { updateElements } from "../../../store/slice/elementSlice";
 import { changeApplicationState, changePrimaryIndex, changeSecondaryIndex } from "../../../store/slice/stateSlice";
-import { APPLICATION_STATE, Algo, LineType } from "../../Types";
+import { APPLICATION_STATE, Algo, AlgoStepType, Complexity, LineType } from "../../Types";
 
 
 export class MergeSort implements Algo {
@@ -18,6 +18,7 @@ export class MergeSort implements Algo {
     start(): void {
         this.sort(this.elements);
     }
+
 
     async sort(arr: LineType[]): Promise<void> {
         await this.mergeSort(arr, 0, arr.length - 1);
@@ -102,12 +103,20 @@ export class MergeSort implements Algo {
         }
     }
 
-    getTimeComplexity(): string {
-        return "O(n log n)";
+    getTimeComplexity(): Complexity {
+        return {
+            best: "O(n log n)",
+            average: "O(n log n)",
+            worst: "O(n log n)"
+        };
     }
 
-    getSpaceComplexity(): string {
-        return "O(n)";
+    getSpaceComplexity(): Complexity {
+        return {
+            best: "O(n)",
+            average: "O(n)",
+            worst: "O(n)",
+        };
     }
 
     getName(): string {
@@ -120,152 +129,357 @@ export class MergeSort implements Algo {
 
     getJavaCode(): string {
         return `
+import java.util.Arrays;
+
 public class MergeSort {
-    void merge(int arr[], int l, int m, int r) {
-        int n1 = m - l + 1;
-        int n2 = r - m;
-        int L[] = new int[n1];
-        int R[] = new int[n2];
-        for (int i = 0; i < n1; ++i)
-            L[i] = arr[l + i];
-        for (int j = 0; j < n2; ++j)
-            R[j] = arr[m + 1 + j];
+    public static void main(String[] args) {
+        int[] array = {38, 27, 43, 3, 9, 82, 10};
+        mergeSort(array, 0, array.length - 1);
+        System.out.println(Arrays.toString(array));
+    }
+
+    public static void mergeSort(int[] array, int left, int right) {
+        if (left < right) {
+            int middle = (left + right) / 2;
+            mergeSort(array, left, middle);
+            mergeSort(array, middle + 1, right);
+            merge(array, left, middle, right);
+        }
+    }
+
+    public static void merge(int[] array, int left, int middle, int right) {
+        int n1 = middle - left + 1;
+        int n2 = right - middle;
+
+        int[] leftArray = new int[n1];
+        int[] rightArray = new int[n2];
+
+        for (int i = 0; i < n1; i++)
+            leftArray[i] = array[left + i];
+        for (int i = 0; i < n2; i++)
+            rightArray[i] = array[middle + 1 + i];
+
         int i = 0, j = 0;
-        int k = l;
+        int k = left;
         while (i < n1 && j < n2) {
-            if (L[i] <= R[j]) {
-                arr[k] = L[i];
+            if (leftArray[i] <= rightArray[j]) {
+                array[k] = leftArray[i];
                 i++;
             } else {
-                arr[k] = R[j];
+                array[k] = rightArray[j];
                 j++;
             }
             k++;
         }
+
         while (i < n1) {
-            arr[k] = L[i];
+            array[k] = leftArray[i];
             i++;
             k++;
         }
+
         while (j < n2) {
-            arr[k] = R[j];
+            array[k] = rightArray[j];
             j++;
             k++;
         }
     }
-    void sort(int arr[], int l, int r) {
-        if (l < r) {
-            int m = (l + r) / 2;
-            sort(arr, l, m);
-            sort(arr, m + 1, r);
-            merge(arr, l, m, r);
-        }
-    }
-}`;
+}
+
+        `
     }
 
     getJavascriptCode(): string {
         return `
-function mergeSort(arr) {
-    if (arr.length <= 1) return arr;
-    const mid = Math.floor(arr.length / 2);
-    const left = mergeSort(arr.slice(0, mid));
-    const right = mergeSort(arr.slice(mid));
-    return merge(left, right);
-}
+function mergeSort(array) {
+    if (array.length > 1) {
+        const middle = Math.floor(array.length / 2);
+        const leftHalf = array.slice(0, middle);
+        const rightHalf = array.slice(middle);
 
-function merge(left, right) {
-    let result = [];
-    while (left.length && right.length) {
-        if (left[0] <= right[0]) {
-            result.push(left.shift());
-        } else {
-            result.push(right.shift());
+        mergeSort(leftHalf);
+        mergeSort(rightHalf);
+
+        let i = 0, j = 0, k = 0;
+        while (i < leftHalf.length && j < rightHalf.length) {
+            if (leftHalf[i] < rightHalf[j]) {
+                array[k] = leftHalf[i];
+                i++;
+            } else {
+                array[k] = rightHalf[j];
+                j++;
+            }
+            k++;
+        }
+
+        while (i < leftHalf.length) {
+            array[k] = leftHalf[i];
+            i++;
+            k++;
+        }
+
+        while (j < rightHalf.length) {
+            array[k] = rightHalf[j];
+            j++;
+            k++;
         }
     }
-    return result.concat(left, right);
-}`;
+}
+
+const array = [38, 27, 43, 3, 9, 82, 10];
+mergeSort(array);
+console.log(array);
+        `
     }
 
     getPythonCode(): string {
         return `
-def merge_sort(arr):
-    if len(arr) <= 1:
-        return arr
-    mid = len(arr) // 2
-    left = merge_sort(arr[:mid])
-    right = merge_sort(arr[mid:])
-    return merge(left, right)
+def merge_sort(array):
+    if len(array) > 1:
+        middle = len(array) // 2
+        left_half = array[:middle]
+        right_half = array[middle:]
 
-def merge(left, right):
-    result = []
-    while left and right:
-        if left[0] <= right[0]:
-            result.append(left.pop(0))
-        else:
-            result.append(right.pop(0))
-    return result + left + right`;
+        merge_sort(left_half)
+        merge_sort(right_half)
+
+        i = j = k = 0
+        while i < len(left_half) and j < len(right_half):
+            if left_half[i] < right_half[j]:
+                array[k] = left_half[i]
+                i += 1
+            else:
+                array[k] = right_half[j]
+                j += 1
+            k += 1
+
+        while i < len(left_half):
+            array[k] = left_half[i]
+            i += 1
+            k += 1
+
+        while j < len(right_half):
+            array[k] = right_half[j]
+            j += 1
+            k += 1
+
+if __name__ == "__main__":
+    array = [38, 27, 43, 3, 9, 82, 10]
+    merge_sort(array)
+    print(array)
+
+        `
     }
 
     getCCode(): string {
         return `
 #include <stdio.h>
+#include <stdlib.h>
 
-void merge(int arr[], int l, int m, int r) {
-    int n1 = m - l + 1;
-    int n2 = r - m;
-    int L[n1], R[n2];
+void merge(int array[], int left, int middle, int right) {
+    int n1 = middle - left + 1;
+        int n2 = right - middle;
+
+    int* leftArray = (int*)malloc(n1 * sizeof(int));
+    int* rightArray = (int*)malloc(n2 * sizeof(int));
+
     for (int i = 0; i < n1; i++)
-        L[i] = arr[l + i];
-    for (int j = 0; j < n2; j++)
-        R[j] = arr[m + 1 + j];
-    int i = 0, j = 0, k = l;
+        leftArray[i] = array[left + i];
+    for (int i = 0; i < n2; i++)
+        rightArray[i] = array[middle + 1 + i];
+
+    int i = 0, j = 0, k = left;
     while (i < n1 && j < n2) {
-        if (L[i] <= R[j]) {
-            arr[k] = L[i];
+        if (leftArray[i] <= rightArray[j]) {
+            array[k] = leftArray[i];
             i++;
         } else {
-            arr[k] = R[j];
+            array[k] = rightArray[j];
             j++;
         }
         k++;
     }
+
     while (i < n1) {
-        arr[k] = L[i];
+        array[k] = leftArray[i];
         i++;
         k++;
     }
+
     while (j < n2) {
-        arr[k] = R[j];
+        array[k] = rightArray[j];
         j++;
         k++;
     }
+
+    free(leftArray);
+    free(rightArray);
 }
 
-void mergeSort(int arr[], int l, int r) {
-    if (l < r) {
-        int m = l + (r - l) / 2;
-        mergeSort(arr, l, m);
-        mergeSort(arr, m + 1, r);
-        merge(arr, l, m, r);
+void mergeSort(int array[], int left, int right) {
+    if (left < right) {
+        int middle = left + (right - left) / 2;
+        mergeSort(array, left, middle);
+        mergeSort(array, middle + 1, right);
+        merge(array, left, middle, right);
     }
 }
 
-void printArray(int arr[], int size) {
-    for (int i = 0; i < size; i++)
-        printf("%d ", arr[i]);
+int main() {
+    int array[] = {38, 27, 43, 3, 9, 82, 10};
+    int arraySize = sizeof(array) / sizeof(array[0]);
+
+    mergeSort(array, 0, arraySize - 1);
+
+    printf("Sorted array: \\n");
+    for (int i = 0; i < arraySize; i++)
+        printf("%d ", array[i]);
     printf("\\n");
+
+    return 0;
 }
 
-int main() {
-    int arr[] = {12, 11, 13, 5, 6, 7};
-    int arr_size = sizeof(arr) / sizeof(arr[0]);
-    printf("Unsorted array: \\n");
-    printArray(arr, arr_size);
-    mergeSort(arr, 0, arr_size - 1);
-    printf("Sorted array: \\n");
-    printArray(arr, arr_size);
-    return 0;
-}`;
+        `
+    }
+
+    getAlgoSteps(): AlgoStepType[] {
+        return [
+            {
+                "title": "Initial Array",
+                "description": "The input array to be sorted.",
+                "array": [38, 27, 43, 3, 9, 82, 10]
+            },
+            {
+                "title": "Divide",
+                "description": "Split the array into two halves.",
+                "steps": [
+                    {
+                        "description": "Left Half",
+                        "array": [38, 27, 43]
+                    },
+                    {
+                        "description": "Right Half",
+                        "array": [3, 9, 82, 10]
+                    }
+                ]
+            },
+            {
+                "title": "Recursive Sort on Left Half",
+                "description": "Apply merge sort recursively on the left half.",
+                "steps": [
+                    {
+                        "description": "Split",
+                        "steps": [
+                            {
+                                "description": "Left Half",
+                                "array": [38]
+                            },
+                            {
+                                "description": "Right Half",
+                                "array": [27, 43]
+                            }
+                        ]
+                    },
+                    {
+                        "description": "Recursive Sort on Right Half",
+                        "steps": [
+                            {
+                                "description": "Split",
+                                "steps": [
+                                    {
+                                        "description": "Left Half",
+                                        "array": [27]
+                                    },
+                                    {
+                                        "description": "Right Half",
+                                        "array": [43]
+                                    }
+                                ]
+                            },
+                            {
+                                "description": "Merge",
+                                "result": [27, 43]
+                            }
+                        ]
+                    },
+                    {
+                        "description": "Merge",
+                        "result": [27, 38, 43]
+                    }
+                ]
+            },
+            {
+                "title": "Recursive Sort on Right Half",
+                "description": "Apply merge sort recursively on the right half.",
+                "steps": [
+                    {
+                        "description": "Split",
+                        "steps": [
+                            {
+                                "description": "Left Half",
+                                "array": [3, 9]
+                            },
+                            {
+                                "description": "Right Half",
+                                "array": [82, 10]
+                            }
+                        ]
+                    },
+                    {
+                        "description": "Recursive Sort on Left Half",
+                        "steps": [
+                            {
+                                "description": "Split",
+                                "steps": [
+                                    {
+                                        "description": "Left Half",
+                                        "array": [3]
+                                    },
+                                    {
+                                        "description": "Right Half",
+                                        "array": [9]
+                                    }
+                                ]
+                            },
+                            {
+                                "description": "Merge",
+                                "result": [3, 9]
+                            }
+                        ]
+                    },
+                    {
+                        "description": "Recursive Sort on Right Half",
+                        "steps": [
+                            {
+                                "description": "Split",
+                                "steps": [
+                                    {
+                                        "description": "Left Half",
+                                        "array": [82]
+                                    },
+                                    {
+                                        "description": "Right Half",
+                                        "array": [10]
+                                    }
+                                ]
+                            },
+                            {
+                                "description": "Merge",
+                                "result": [10, 82]
+                            }
+                        ]
+                    },
+                    {
+                        "description": "Merge",
+                        "result": [3, 9, 10, 82]
+                    }
+                ]
+            },
+            {
+                "title": "Final Merge",
+                "description": "Merge the two sorted halves.",
+                "result": [3, 9, 10, 27, 38, 43, 82]
+            }
+        ]
     }
 }

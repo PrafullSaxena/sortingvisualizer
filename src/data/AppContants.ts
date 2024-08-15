@@ -22,3 +22,30 @@ export const ALGORITHMS = {
     SHELL_SORT: "Shell Sort",
     // RADIX_SORT: "Radix Sort",
 }
+
+export const COLOR = {
+    PRIMARY: "#764abc",
+    // SECONDARY: "#F7C41C",
+    SECONDARY: "#1888ce",
+    BLACK: "#0f0f0f",
+    WHITE: "#F7F7F7",
+    DARK_PURPLE: "#241f4e",
+    LINE_ACTIVE: "#3b17eb",
+    NUTRAL: "#8470ea",
+    BORDER: "#684eec"
+}
+
+export const LANGUGAE = {
+    JAVA: "java",
+    JAVASCRIPT: "javascript",
+    PYTHON: "python",
+    C: "c",
+}
+
+export const MODEL_OPTIONS = {
+    ABOUT: "About",
+    JAVA: "Java",
+    JAVASCRIPT: "JavaScript",
+    PYTHON: "Python",
+    C: "C",
+}

@@ -1,7 +1,7 @@
 import { AppDispatch, store } from "../../../store";
 import { updateElements } from "../../../store/slice/elementSlice";
 import { changeApplicationState, changePrimaryIndex, changeSecondaryIndex } from "../../../store/slice/stateSlice";
-import { APPLICATION_STATE, Algo, LineType } from "../../Types";
+import { APPLICATION_STATE, Algo, LineType, AlgoStepType, Complexity } from "../../Types";
 
 export class SelectionSort implements Algo {
 
@@ -17,7 +17,6 @@ export class SelectionSort implements Algo {
     start(): void {
         this.sort(this.elements);
     }
-
 
     async sort(arr: LineType[]): Promise<void> {
         let n = arr.length;
@@ -46,12 +45,20 @@ export class SelectionSort implements Algo {
         this.dispatch(changeApplicationState(APPLICATION_STATE.FINISHED));
     }
 
-    getTimeComplexity(): string {
-        return "O(n^2)";
+    getTimeComplexity(): Complexity {
+        return {
+            best: "O(n^2)",
+            average: "O(n^2)",
+            worst: "O(n^2)",
+        };
     }
 
-    getSpaceComplexity(): string {
-        return "O(1)";
+    getSpaceComplexity(): Complexity {
+        return {
+            best: "O(1)",
+            average: "O(1)",
+            worst: "O(1)",
+        };
     }
 
     getName(): string {
@@ -60,6 +67,52 @@ export class SelectionSort implements Algo {
 
     getDescription(): string {
         return "Selection Sort is an in-place comparison sort that divides the input into two parts: a sorted and an unsorted subarray. It repeatedly selects the smallest element from the unsorted subarray and moves it to the end of the sorted subarray.";
+    }
+
+    getAlgoSteps(): AlgoStepType[] {
+        return [
+            {
+                "title": "Initial Array",
+                "description": "The input array to be sorted using Selection Sort.",
+                "array": [10, 7, 8, 9, 1, 5]
+            },
+            {
+                "title": "Selection Sort",
+                "description": "Sort the array using Selection Sort.",
+                "steps": [
+                    {
+                        "title": "Iteration 1",
+                        "description": "Find the smallest element and swap it with the first element.",
+                        "array": [1, 7, 8, 9, 10, 5]
+                    },
+                    {
+                        "title": "Iteration 2",
+                        "description": "Find the smallest element in the remaining array and swap it with the second element.",
+                        "array": [1, 5, 8, 9, 10, 7]
+                    },
+                    {
+                        "title": "Iteration 3",
+                        "description": "Find the smallest element in the remaining array and swap it with the third element.",
+                        "array": [1, 5, 7, 9, 10, 8]
+                    },
+                    {
+                        "title": "Iteration 4",
+                        "description": "Find the smallest element in the remaining array and swap it with the fourth element.",
+                        "array": [1, 5, 7, 8, 10, 9]
+                    },
+                    {
+                        "title": "Iteration 5",
+                        "description": "Find the smallest element in the remaining array and swap it with the fifth element.",
+                        "array": [1, 5, 7, 8, 9, 10]
+                    }
+                ]
+            },
+            {
+                "title": "Sorted Array",
+                "description": "Array after Selection Sort.",
+                "array": [1, 5, 7, 8, 9, 10]
+            }
+        ]
     }
 
     getJavaCode(): string {

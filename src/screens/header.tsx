@@ -7,13 +7,14 @@ import ButtonGrid from '../components/ButtonGrid';
 import IconText from '../components/IconText';
 import { CiSquareMore } from 'react-icons/ci';
 import { useAppDispatch, useAppSelector, useEnumToArray } from '../utils/hooks';
-import { changeSelectedAlgo } from '../store/slice/stateSlice';
+import { changeSelectedAlgo, setModelState } from '../store/slice/stateSlice';
 
 const Container = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 10px 30px;
+  background-color: #764abc;
 `;
 
 const Logo = styled.div`
@@ -22,14 +23,16 @@ const Logo = styled.div`
 `;
 
 const AlgoInfo = styled.div`
-  padding: 10px;
+  padding: 5px 10px;
   cursor: pointer;
   display: flex;
   justify-items: center;
   align-items: center;
-  padding: 10px;
-  width: 150px;
+  width: 180px;
   border: 1px solid #ccc;
+  border-radius: 10px;
+  font-size: 18px;
+  font-weight: 400;
 `;
 
 const Header: FC = () => {
@@ -42,6 +45,7 @@ const Header: FC = () => {
     dispatch(changeSelectedAlgo(algo));
   };
   const handleAlgoInfo = () => {
+    dispatch(setModelState(true));
     console.log('Logging selected algo');
   };
 

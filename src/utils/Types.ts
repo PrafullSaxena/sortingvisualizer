@@ -30,17 +30,32 @@ export enum APPLICATION_STATE {
     FINISHED
 }
 
+export type AlgoStepType = {
+    title?: string;
+    description?: string;
+    array?: number[];
+    result?: number[];
+    steps?: AlgoStepType[];
+};
+
+export interface Complexity {
+    best: string;
+    average: string;
+    worst: string;
+}
+
 export interface Algo {
     start(): void;
     sort(arr: LineType[]): void;
-    getTimeComplexity(): string;
-    getSpaceComplexity(): string;
+    getTimeComplexity(): Complexity;
+    getSpaceComplexity(): Complexity;
     getName(): string;
     getDescription(): string;
     getJavaCode(): string;
     getJavascriptCode(): string;
     getPythonCode(): string;
     getCCode(): string;
+    getAlgoSteps(): AlgoStepType[];
 }
 
 export interface ApplicationState {
@@ -48,4 +63,6 @@ export interface ApplicationState {
     selectedAlgo: string;
     currentPrimary: number;
     currentSecondary: number;
+    modelOpen: boolean;
 }
+
